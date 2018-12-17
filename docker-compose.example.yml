@@ -1,7 +1,8 @@
 version: "3"
 services:
-    judge_server:
+    judge-server:
         image: registry.cn-hangzhou.aliyuncs.com/badcw-oj/oj-server
+        container_name: judge-server
         read_only: true
         cap_drop:
             - SETPCAP
