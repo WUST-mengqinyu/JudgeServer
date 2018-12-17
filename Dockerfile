@@ -1,15 +1,17 @@
 FROM ubuntu:18.10
 
 
+ENV buildDeps='software-properties-common git libtool cmake python-dev python3-pip python-pip libseccomp-dev'
 
 COPY build/java_policy /etc
+# for mainland
 #COPY build/sources.list /etc/apt/
 
-RUN buildDeps='software-properties-common git libtool cmake python-dev python3-pip python-pip libseccomp-dev'
-RUN apt update && apt install -y python python3 python-pkg-resources python3-pkg-resources gcc g++ $buildDeps && \
-    add-apt-repository ppa:openjdk-r/ppa && apt update && apt install -y openjdk-11-jdk
-#pip install -i https://pypi.tuna.tsinghua.edu.cn/simple
-RUN pip3 install--no-cache-dir psutil gunicorn flask requests && \
+RUN apt-get update && apt-get install -y python python3 python-pkg-resources python3-pkg-resources gcc g++ $buildDeps && \
+    add-apt-repository ppa:openjdk-r/ppa && apt-get update && apt-get install -y openjdk-11-jdk
+# for mainland
+#RUN pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir psutil gunicorn flask requests && \
+RUN pip3 install --no-cache-dir psutil gunicorn flask requests && \
     cd /tmp && git clone -b master  --depth 1 https://github.com/badcw-OnlineJudge/Judger && cd Judger && \ 
     mkdir build && cd build && cmake .. && make && make install && cd ../bindings/Python && python3 setup.py install && \
     apt-get purge -y --auto-remove $buildDeps && \
