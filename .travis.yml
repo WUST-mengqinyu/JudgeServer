@@ -6,7 +6,7 @@ before_install:
     - sudo mkdir -p /data/log
     - pip install requests
 script:
-    - docker pull badcw-OnlineJudge/judge-server
+    - docker pull registry.cn-hangzhou.aliyuncs.com/badcw-oj/oj-server
     - cp docker-compose.example.yml docker-compose.yml
     - docker-compose up -d
     - docker ps -a
